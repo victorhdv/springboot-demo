@@ -59,4 +59,17 @@ public class ExampleController {
 
         return new ResponseEntity<>("Usuario deletado com sucesso", HttpStatus.OK);
     }
+
+    @GetMapping("/getuserbyid")
+    @ResponseBody
+    public ResponseEntity<Usuario> buscarUsuarioPorId(@RequestParam Long id) {
+
+        var usuario = usuarioRepository.findById(id);
+
+        if (usuario.isEmpty()) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+        }
+
+        return new ResponseEntity<>(usuario.get(), HttpStatus.OK);
+    }
 }
